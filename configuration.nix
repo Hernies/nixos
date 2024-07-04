@@ -16,26 +16,27 @@
 
   networking.hostName = "nixos"; # Define your hostname.
 #  networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+  boot.initrd.kernelModules = [ "amdgpu"];
 
   # TODO hacer que cambie según la gráfica  nvidia driver setup 
-  hardware.opengl.enable = true;
-  services.xserver.videoDrivers = [ "nvidia" ];
-  hardware.nvidia = {
-    modesetting.enable = true;
-    powerManagement.enable = false;
-    powerManagement.finegrained = false;
-    open = false;
-    nvidiaSettings = true;
-    package = config.boot.kernelPackages.nvidiaPackages.stable;
-  };
-  hardware.nvidia.prime = { 
-    offload = {
-      enable = true;
-      enableOffloadCmd = true;
-    };
-    nvidiaBusId =  "PCI:0:1:0";
-    intelBusId =  "PCI:0:0:2";
-  };
+#  hardware.opengl.enable = true;
+ # services.xserver.videoDrivers = [ "nvidia" ];
+ # hardware.nvidia = {
+ #   modesetting.enable = true;
+ #   powerManagement.enable = false;
+ #   powerManagement.finegrained = false;
+ #   open = false;
+ #   nvidiaSettings = true;
+ #   package = config.boot.kernelPackages.nvidiaPackages.stable;
+ # };
+ # hardware.nvidia.prime = { 
+ #   offload = {
+ #     enable = true;
+ #     enableOffloadCmd = true;
+ #   };
+ #   nvidiaBusId =  "PCI:0:1:0";
+ #   intelBusId =  "PCI:0:0:2";
+ # };
     
 
   # Configure network proxy if necessary
@@ -65,6 +66,10 @@
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;
+
+  # Enable the gpu driver
+  services.xserver.videoDrivers = ["amdgpu"];
+
 
   # Enable the GNOME Desktop Environment.
   services.xserver.displayManager.gdm.enable = true;
