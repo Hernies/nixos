@@ -81,6 +81,10 @@ in
       enable = true;
       userName = gitArgs.name;
       userEmail = gitArgs.mail;
+      aliases = {
+         ci = "commit";
+         co = "checkout";
+      };
     };
     bash = {
       enable = true;
