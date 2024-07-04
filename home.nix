@@ -1,4 +1,4 @@
-{ config, pkgs, username ... }:
+{ config, pkgs, username, gitArgs, ... }:
 let 
  #aliases to use in all my shells
  aliases =  {
@@ -76,24 +76,33 @@ in
     # EDITOR = "emacs";
   };
   
-  programs.bash = {
-    enable = true;
-    shellAliases = aliases;
-  };
-  programs.oh-my-posh = {
-    enable = true;
-    enableZshIntegration = true;
-    useTheme = "agnoster.minimal";
-  };
-  programs.zsh = {
-     enable = true;
-     shellAliases = aliases;
-     autosuggestion = {
-       enable = true;
-     };
-     history.ignoreAllDups=true;
+  programs = {
+    git = {
+      enable = true;
+      userName = gitArgs.name;
+      userEmail = gitArgs.mail;
     };
+    bash = {
+      enable = true;
+      shellAliases = aliases;
+    };
+    oh-my-posh = {
+      enable = true;
+      enableZshIntegration = true;
+      useTheme = "agnoster.minimal";
+    };
+    zsh = {
+      enable = true;
+      shellAliases = aliases;
+      autosuggestion = {
+        enable = true;
+      };
+      history.ignoreAllDups=true;
+      };
 
-  # Let Home Manager install and manage itself.
-  programs.home-manager.enable = true;
+    # Let Home Manager install and manage itself.
+    home-manager.enable = true;
+  };
+  
+
 }
