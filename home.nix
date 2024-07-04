@@ -1,4 +1,5 @@
-{ config, pkgs, username, gitArgs, ... }:
+{ config, pkgs, lib, username, gitArgs, ... }:
+with lib.hm.gvariant;
 let 
  #aliases to use in all my shells
  aliases =  {
@@ -73,6 +74,14 @@ in
   #
   #  /etc/profiles/per-user/hernies/etc/profile.d/hm-session-vars.sh
   #
+
+  home-manager.users.hernies = { pkgs, ... }: {
+    imports = [ ./dconf.nix ];
+
+    # Other home-manager configurations here
+  };
+
+
   home.sessionVariables = {
     # EDITOR = "emacs";
   };

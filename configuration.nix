@@ -6,7 +6,8 @@
 
 {
   imports =
-    [ # Include the results of the hardware scan.
+    [ 
+      # Include the results of the hardware scan.
       ./hardware-configuration.nix
     ];
 
@@ -74,7 +75,7 @@
   # Enable the GNOME Desktop Environment.
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
-
+  
   # Configure keymap in X11
   services.xserver.xkb = {
     layout = "us";
@@ -119,7 +120,7 @@
   # Enable zsh as default promt
   programs.zsh.enable = true;
   users.defaultUserShell = pkgs.zsh;
-
+  
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.hernies = {
     isNormalUser = true;
@@ -150,6 +151,7 @@
     pulseaudio
     git
     lshw
+    gnomeExtensions.unite
   ];
 
   # Some programs need SUID wrappers, can be configured further or are

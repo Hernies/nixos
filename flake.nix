@@ -57,6 +57,7 @@
        extraSpecialArgs = {
          inherit username;
          inherit gitArgs;
+         inherit lib;
          # -- future inheritance of variables or var groups here -- #
        };
      };
