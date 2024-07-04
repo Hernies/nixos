@@ -3,6 +3,7 @@ let
  #aliases to use in all my shells
  aliases =  {
       la = "ls -la";
+      nv = "nvim";
     };
 in 
 {
@@ -103,7 +104,11 @@ in
       };
       history.ignoreAllDups=true;
       };
-
+    neovim = {
+       enable = true;
+       # defaultEditor = true;
+       # pkgs.vimPlugins.nvchad;
+    };
     # Let Home Manager install and manage itself.
     home-manager.enable = true;
   };
