@@ -14,6 +14,10 @@
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  
+  # auto updates
+  system.autoUpgrade.enable  = true;
+  system.autoUpgrade.allowReboot  = true;
 
   networking.hostName = "nixos"; # Define your hostname.
 #  networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -82,6 +86,12 @@
     variant = "intl";
   };
 
+  # plex server
+#  services.plex = {
+#    enable = true;
+#    openFirewall = true;
+#  };
+
   # Configure console keymap
   console.keyMap = "us-acentos";
 
@@ -121,6 +131,11 @@
   programs.zsh.enable = true;
   users.defaultUserShell = pkgs.zsh;
   
+  # installing steam
+  programs.steam.enable = true;
+  programs.steam.gamescopeSession.enable = true;
+  programs.gamemode.enable = true;
+
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.hernies = {
     isNormalUser = true;
@@ -135,6 +150,9 @@
       git
       popcorntime
       vlc
+      kicad
+      mangohud #gaming
+      pavucontrol
     ];
   };
 
@@ -152,7 +170,26 @@
     git
     lshw
     gnomeExtensions.unite
+    protonup # gaming
+    zoom-us
+    noto-fonts-cjk # contains kaiti for hanzi
+    vesktop
+    element-desktop-wayland
   ];
+
+  fonts.packages = [ 
+   pkgs.noto-fonts-cjk
+ ];
+  
+ # Intelligent Bus setup for writing pinyin and hanzi
+ i18n.inputMethod = {
+  enabled = "fcitx5";
+  fcitx5.addons = with pkgs; [
+      fcitx5-gtk
+      fcitx5-chinese-addons
+      fcitx5-nord
+    ];
+ };
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -161,6 +198,26 @@
   #   enable = true;
   #   enableSSHSupport = true;
   # };
+
+  # firejail zoom config
+  programs.firejail = {
+   enable = true;
+   wrappedBinaries = {
+     zoom-us = {
+       executable = "${pkgs.zoom-us}/bin/zoom";
+       profile = "${pkgs.firejail}/etc/firejail/zoom.profile"; # default profile
+       extraArgs = [
+        # Allow notifications
+        "--dbus-user.talk=org.freedesktop.Notifications"
+        # Optional: Allow camera access
+        "--caps.drop=all --caps.keep=CAP_SYS_RESOURCE"
+        # Enable dark mode for Zoom's UI (GTK based apps)
+        "--env=GTK_THEME=Adwaita:dark"
+      ];
+     };
+   };
+  };
+
 
   # List services that you want to enable:
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
