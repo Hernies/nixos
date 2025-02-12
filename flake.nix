@@ -26,11 +26,14 @@
        #nixos is my hostname
        nixos = lib.nixosSystem {
          inherit system;
-         modules = [ ./configuration.nix ];
-       };
-       specialArgs = {
-         inherit username;
-         # -- future inheritance of variables or var groups here -- #       
+         modules = [ 
+          ./configuration.nix 
+          ./wireguard.nix
+         ];
+         specialArgs = {
+           inherit username;
+           # -- future inheritance of variables or var groups here -- #       
+         };
        };
      };
  packages = {
