@@ -110,15 +110,15 @@
   };
 
   # Ensure PulseAudio is configured to handle Bluetooth audio
-  hardware.pulseaudio = {
-    enable = true;
-    package = pkgs.pulseaudioFull;
-    extraConfig = ''
-      # Load Bluetooth modules
-      load-module module-bluetooth-discover
-      load-module module-bluetooth-policy
-    '';
-  };
+  # hardware.pulseaudio = {
+  #  enable = true;
+  #  package = pkgs.pulseaudioFull;
+  #  extraConfig = ''
+  #    # Load Bluetooth modules
+  #    load-module module-bluetooth-discover
+  #    load-module module-bluetooth-policy
+  #  '';
+  # };
 
   # Optional: Enable the Bluetooth applet for easier management
   services.blueman = {
@@ -129,8 +129,8 @@
   # services.xserver.libinput.enable = true;
 
   # Enable zsh as default promt
-  programs.zsh.enable = true;
-  users.defaultUserShell = pkgs.zsh;
+  # programs.zsh.enable = true;
+  # users.defaultUserShell = pkgs.zsh;
   
   # installing steam
   programs.steam.enable = true;
@@ -148,10 +148,9 @@
       discord
       vscode
       spotify
-      git
       popcorntime
       vlc
-      kicad
+      # kicad FUCK KICAD in laptops
       mangohud #gaming
       pavucontrol
     ];
@@ -173,18 +172,19 @@
     gnomeExtensions.unite
     protonup # gaming
     zoom-us
-    noto-fonts-cjk # contains kaiti for hanzi
+    noto-fonts-cjk-sans # contains kaiti for hanzi
     vesktop
-    element-desktop-wayland
+    element-desktop 
   ];
 
   fonts.packages = [ 
-   pkgs.noto-fonts-cjk
+   pkgs.noto-fonts-cjk-sans
  ];
   
  # Intelligent Bus setup for writing pinyin and hanzi
  i18n.inputMethod = {
-  enabled = "fcitx5";
+  enable = true;
+  type = "fcitx5";
   fcitx5.addons = with pkgs; [
       fcitx5-gtk
       fcitx5-chinese-addons
@@ -200,24 +200,6 @@
   #   enableSSHSupport = true;
   # };
 
-  # firejail zoom config
-  programs.firejail = {
-   enable = true;
-   wrappedBinaries = {
-     zoom-us = {
-       executable = "${pkgs.zoom-us}/bin/zoom";
-       profile = "${pkgs.firejail}/etc/firejail/zoom.profile"; # default profile
-       extraArgs = [
-        # Allow notifications
-        "--dbus-user.talk=org.freedesktop.Notifications"
-        # Optional: Allow camera access
-        "--caps.drop=all --caps.keep=CAP_SYS_RESOURCE"
-        # Enable dark mode for Zoom's UI (GTK based apps)
-        "--env=GTK_THEME=Adwaita:dark"
-      ];
-     };
-   };
-  };
 
 
   # List services that you want to enable:
@@ -237,6 +219,6 @@
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "24.05"; # Did you read the comment?
+  system.stateVersion = "25.05"; # Did you read the comment?
   
 }
