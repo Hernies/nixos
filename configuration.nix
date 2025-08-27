@@ -9,9 +9,10 @@
     [ 
       # Include the results of the hardware scan.
       ./hardware-configuration.nix
-      ./wireguard.nix
+      ./t495s-i8042-fix.nix
     ];
 
+  	
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -23,6 +24,12 @@
   networking.hostName = "nixos"; # Define your hostname.
 #  networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
   boot.initrd.kernelModules = [ "amdgpu"];
+
+
+  # Thinkpad T495s trackpad fix
+  t495sFix.enable = true; 
+
+
 
   # TODO hacer que cambie según la gráfica  nvidia driver setup 
 #  hardware.opengl.enable = true;
