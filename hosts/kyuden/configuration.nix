@@ -19,12 +19,22 @@
   # auto updates
   system.autoUpgrade.enable = false;
   system.autoUpgrade.allowReboot = false;
+ 
+  # Nix garbage collection 
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 14d";
+  };
+
+  nix.settings = {
+    min-free = 10 * 1024 * 1024 * 1024;
+    max-free = 40 * 1024 * 1024 * 1024;
+  };
 
   networking.hostName = "kyuden"; # Define your hostname.
 #  networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
   boot.initrd.kernelModules = [ "amdgpu"];
-
-    
 
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
@@ -124,12 +134,14 @@
       mangohud #gaming
       pavucontrol
       protonvpn-gui
+      claude-code
     ];
   };
 
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
+
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -145,6 +157,8 @@
     noto-fonts-cjk-sans # contains kaiti for hanzi
     vesktop
     element-desktop 
+    efibootmgr
+    wl-clipboard
   ];
 
   fonts.packages = [ 
