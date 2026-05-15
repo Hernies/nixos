@@ -17,8 +17,8 @@
   boot.loader.efi.canTouchEfiVariables = true;
   
   # auto updates
-  system.autoUpgrade.enable  = true;
-  system.autoUpgrade.allowReboot  = true;
+  system.autoUpgrade.enable = false;
+  system.autoUpgrade.allowReboot = false;
 
   networking.hostName = "kyuden"; # Define your hostname.
 #  networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -134,7 +134,7 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    home-manager
+    # home-manager
     bluez
     blueman
     pulseaudio
